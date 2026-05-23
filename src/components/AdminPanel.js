@@ -11,6 +11,10 @@ const AdminPanel = ({ history }) => {
   });
 
   useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = () => {
     fetch('https://dummyjson.com/products/category/smartphones')
       .then(response => response.json())
       .then(data => {
@@ -19,7 +23,7 @@ const AdminPanel = ({ history }) => {
       .catch(error => {
         console.error('Error fetching products:', error);
       });
-  }, []);
+  };
 
   const handleDelete = (id) => {
     fetch(`https://dummyjson.com/products/${id}`, {
@@ -82,11 +86,17 @@ const AdminPanel = ({ history }) => {
       .then(response => response.json())
       .then(addedProduct => {
         const newId = Math.max(...products.map(p => p.id), 0) + 1;
-        setProducts([...products, { ...addedProduct, id: newId }]);
+        const productWithId = { ...addedProduct, id: newId };
+        setProducts([...products, productWithId]);
         setNewProduct({ title: '', description: '', price: '', thumbnail: '' });
       })
       .catch(error => {
         console.error('Error adding product:', error);
+        // Fallback for demo purposes
+        const newId = Math.max(...products.map(p => p.id), 0) + 1;
+        const productWithId = { ...productToAdd, id: newId };
+        setProducts([...products, productWithId]);
+        setNewProduct({ title: '', description: '', price: '', thumbnail: '' });
       });
   };
 

@@ -20,16 +20,28 @@ const ProductList = () => {
       <h1>Mobile Store</h1>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {products.map(product => (
-          <div key={product.id} style={{ border: '1px solid #ccc', padding: '10px', width: '200px' }}>
-            <Link to={`/products/${product.id}`}>
-              <img src={product.thumbnail} alt={product.title} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
+          <div key={product.id} style={{ border: '1px solid #ccc', padding: '10px', width: '250px' }}>
+            <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <img src={product.thumbnail} alt={product.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
               <h3>{product.title}</h3>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <p>${product.price}</p>
-                <button style={{textDecoration:'none'}} >Buy Now</button>
-              </div>
-
+              <p>{product.brand || 'Black'}</p>
+              <p>Price: ${product.price}</p>
+              <button 
+                style={{ 
+                  backgroundColor: '#007bff', 
+                  color: 'white', 
+                  border: 'none', 
+                  padding: '5px 10px', 
+                  cursor: 'pointer',
+                  marginTop: '10px'
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert(`Added ${product.title} to cart!`);
+                }}
+              >
+                Buy
+              </button>
             </Link>
           </div>
         ))}
